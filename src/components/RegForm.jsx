@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRef } from 'react';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from './api/axios';
+
 import './RegForm.scss'
 
 
@@ -63,51 +63,28 @@ const RegForm = (props) => {
             setErrMsg("Invalid Entry");
             return;
         }
-        try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
-            setSuccess(true);
-            //clear state and controlled inputs
-            //need value attrib on inputs for this
-            setUser('');
-            setPwd('');
-            setMatchPwd('');
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
-            }
-            errRef.current.focus();
-        }
     }
 
     return (
         <>
-            {success ? (
-                <section>
-                    <h1>Success!</h1>
-                    <p>
-                        <a href="#">Sign In</a>
+            {/* Background section starts */}
+
+            <section>
+                <div className="background">
+                    <h2>Choose a date range</h2>
+                    <p>lorem ipsum dolor sit am lorem
+                        <br /> lorem ore ore dolor sit
                     </p>
-                </section>
-            ) : (
-                <section>
+                </div>
+
+                {/* register section start */}
+
+                <div className="register">
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Register</h1>
+                    <h1>Create an account</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="username">
-                            Username:
+                            Your Username:
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
                         </label>
@@ -133,7 +110,7 @@ const RegForm = (props) => {
 
 
                         <label htmlFor="password">
-                            Password:
+                            Your Password:
                             <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
                         </label>
@@ -151,13 +128,13 @@ const RegForm = (props) => {
                         <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             8 to 24 characters.<br />
-                            Must include uppercase and lowercase letters, a number and a special character.<br />
-                            Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
+                            Must include uppercase and lowercase letters,<br /> a number and a special character.
+                            {/* Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span> */}
                         </p>
 
 
                         <label htmlFor="confirm_pwd">
-                            Confirm Password:
+                            Confirm Your Password:
                             <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
                         </label>
@@ -177,17 +154,18 @@ const RegForm = (props) => {
                             Must match the first password input field.
                         </p>
 
+                        <label>Your Full Name</label>
+                        <input type="text" />
+                        <label>Your Phone Number</label>
+                        <input type="number" />
+
+
                         <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
                     </form>
-                    <p>
-                        Already registered?<br />
-                        <span className="line">
-                            {/*put router link here*/}
-                            <a href="#">Sign In</a>
-                        </span>
-                    </p>
-                </section>
-            )}
+
+                </div>
+            </section>
+
         </>
     )
 }

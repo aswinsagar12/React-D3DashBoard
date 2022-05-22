@@ -4,8 +4,7 @@ import RegForm from './components/RegForm';
 function App() {
   return (
     <div className="App">
-      Hello world
-      <RegForm/>
+         <RegForm/>
     </div>
   );
 }

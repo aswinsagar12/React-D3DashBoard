@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useRef } from 'react';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import './RegForm.scss'
+import { useNavigate } from 'react-router-dom';
 
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const RegForm = (props) => {
+
+
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -65,10 +68,13 @@ const RegForm = (props) => {
         }
     }
 
+    const navigate = useNavigate();
+    function handleClick(){
+        navigate("/demo")
+    }
     return (
         <>
             {/* Background section starts */}
-
             <section>
                 <div className="background">
                     <h2>Choose a date range</h2>
@@ -160,7 +166,9 @@ const RegForm = (props) => {
                         <input type="number" />
 
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                        <button disabled={!validName || !validPwd || !validMatch ? true : false}
+
+                        >Sign Up</button>
                     </form>
 
                 </div>
